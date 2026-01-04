@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{modules/layout :: html(content = ~{::content}, title=${singlePage.spec.title}, pageType='links' )}">
+<th:block th:fragment="content">
+    <div class="container main-container flex on-phone--column extended">
+        <!--      Left Sidebar-->
+        <th:block th:replace="~{modules/common/left-sidebar :: left-sidebar}"></th:block>
+        <main class="main full-width">
+            <th:block th:if="${theme.config.links.show_type == 'post_first'}">
+                <article class="main-article">
+                    <header class="article-header">
+
+                        <div class="article-details">
+                            <div class="article-title-wrapper">
+                                <h2 class="article-title">
+                                    <a th:href="${singlePage.status.permalink}"
+                                       th:text="${singlePage.spec.title}"></a>
+                                </h2>
+                            </div>
+                            <footer class="article-time">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z"></path>
+                                        <circle cx="12" cy="12" r="9"></circle>
+                                        <polyline points="12 7 12 12 15 15"></polyline>
+                                    </svg>
+                                    <time class="article-time--reading">
+                                        <th:block th:with="wordCount = ${#strings.length(singlePage.content)}">
+                                            <th:block th:if="${wordCount / 800 lt 1}">
+                                                1 [[#{theme.read_time}]]
+                                            </th:block>
+                                            <th:block th:if="${wordCount / 800 ge 1}">
+                                                [[${wordCount / 800}]] [[#{theme.read_time}]]
+                                            </th:block>
+                                        </th:block>
+                                    </time>
+                                </div>
+
+                            </footer>
+
+
+
+                        </div>
+
+                    </header>
+
+                    <section class="article-content">
+                        <th:block th:utext="${singlePage.content.content}"></th:block>
+                    </section>
+
+
+                    <footer class="article-footer">
+                        <section class="article-copyright">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z"></path>
+                                <circle cx="12" cy="12" r="9"></circle>
+                                <path d="M14.5 9a3.5 4 0 1 0 0 6"></path>
+                            </svg>
+
+
+
+                            <span th:text="${theme.config.post.article_copyright}">Licensed under CC BY-NC-SA 4.0</span>
+                        </section>
+                    </footer>
+                </article>
+                <div class="article-list--compact links">
+                    <th:block th:each="group : ${linkFinder.groupBy()}">
+
+                        <article th:each="link : ${group.links}" :key="i">
+                            <a th:href="${link.spec.url}" target="_blank" rel="noopener">
+                                <div class="article-details">
+                                    <h2 class="article-title" th:text="${link.spec.displayName}"></h2>
+                                    <footer class="article-time" th:text="${link.spec.description}">
+                                    </footer>
+                                </div>
+
+
+                                <div class="article-image">
+                                    <img th:src="${link.spec.logo}" th:alt="${link.spec.displayName}" loading="lazy">
+                                </div>
+
+                            </a>
+                        </article>
+                    </th:block>
+
+                </div>
+            </th:block>
+            <th:block th:if="${theme.config.links.show_type == 'links_first'}">
+            <div class="article-list--compact links">
+                <th:block th:each="group : ${linkFinder.groupBy()}">
+
+                    <article th:each="link : ${group.links}" :key="i">
+                        <a th:href="${link.spec.url}" target="_blank" rel="noopener">
+                            <div class="article-details">
+                                <h2 class="article-title" th:text="${link.spec.displayName}"></h2>
+                                <footer class="article-time" th:text="${link.spec.description}">
+                                </footer>
+                            </div>
+
+
+                            <div class="article-image">
+                                <img th:src="${link.spec.logo}" th:alt="${link.spec.displayName}" loading="lazy">
+                            </div>
+
+                        </a>
+                    </article>
+                </th:block>
+
+            </div>
+            <article class="main-article">
+                <header class="article-header">
+
+                    <div class="article-details">
+                        <div class="article-title-wrapper">
+                            <h2 class="article-title">
+                                <a th:href="${singlePage.status.permalink}"
+                                   th:text="${singlePage.spec.title}"></a>
+                            </h2>
+                        </div>
+                        <footer class="article-time">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z"></path>
+                                    <circle cx="12" cy="12" r="9"></circle>
+                                    <polyline points="12 7 12 12 15 15"></polyline>
+                                </svg>
+                                <time class="article-time--reading">
+                                    <th:block th:with="wordCount = ${#strings.length(singlePage.content)}">
+                                        <th:block th:if="${wordCount / 800 lt 1}">
+                                            1 [[#{theme.read_time}]]
+                                        </th:block>
+                                        <th:block th:if="${wordCount / 800 ge 1}">
+                                            [[${wordCount / 800}]] [[#{theme.read_time}]]
+                                        </th:block>
+                                    </th:block>
+                                </time>
+                            </div>
+
+                        </footer>
+
+
+
+                    </div>
+
+                </header>
+
+                <section class="article-content">
+                    <th:block th:utext="${singlePage.content.content}"></th:block>
+                </section>
+
+
+                <footer class="article-footer">
+                    <section class="article-copyright">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z"></path>
+                            <circle cx="12" cy="12" r="9"></circle>
+                            <path d="M14.5 9a3.5 4 0 1 0 0 6"></path>
+                        </svg>
+
+
+
+                        <span th:text="${theme.config.post.article_copyright}">Licensed under CC BY-NC-SA 4.0</span>
+                    </section>
+                </footer>
+            </article>
+            </th:block>
+            <th:block th:if="${#annotations.getOrDefault(singlePage, 'showComment', 'false')  == 'true'}">
+                <!--        Comment-->
+                <th:block
+                        th:replace="~{modules/common/comment :: ${theme.config.base.comment_system}(name=${singlePage.metadata.name}, kind='SinglePage')}">
+
+                </th:block>
+            </th:block>
+
+            <!--Footer-->
+            <th:block th:replace="~{modules/common/footer :: footer}"></th:block>
+
+        </main>
+    </div>
+    <!--    Tail JS-->
+    <th:block th:replace="~{modules/tail :: tail}"></th:block>
+</th:block>
+</html>

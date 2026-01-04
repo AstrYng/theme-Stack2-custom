@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{modules/layout :: html(content = ~{::content}, title=${category.spec.displayName}, pageType='category' )}">
+<th:block th:fragment="content">
+    <div class="container main-container flex on-phone--column extended">
+        <!--      Left Sidebar-->
+        <th:block th:replace="~{modules/common/left-sidebar :: left-sidebar}"></th:block>
+        <!--      Right Sidebar-->
+        <th:block th:replace="~{modules/common/right-sidebar :: right-sidebar(toc='false')}"></th:block>
+
+
+        <main class="main full-width">
+            <header>
+                <h3 class="section-title">
+                    [[#{theme.categories}]]
+                </h3>
+
+                <div class="section-card">
+                    <div class="section-details">
+                        <h3 class="section-count">[[${category.status.postCount}]] [[#{theme.page}]]</h3>
+                        <h1 class="section-term" th:text="${category.spec.displayName}"></h1>
+
+                        <h2 class="section-description" th:text="${category.spec.description}"></h2>
+
+                    </div>
+                </div>
+            </header>
+
+            <section class="article-list--compact">
+
+                <article th:each="post : ${posts.items}">
+                    <a th:href="${post.status.permalink}">
+                        <div class="article-details">
+                            <h2 class="article-title"
+                                th:text="${post.spec.title}"></h2>
+                            <footer class="article-time">
+                                <time th:datetime="${post.spec.publishTime}" th:text="${#dates.format(post.spec.publishTime, 'MMM dd, yyyy')}"></time>
+                            </footer>
+                        </div>
+                        <div class="article-image" th:if="${! #strings.isEmpty(post.spec.cover)}">
+                            <img th:src="${post.spec.cover}" width="120" height="120" alt="Hello World" loading="lazy">
+
+                        </div>
+
+                    </a>
+                </article>
+
+            </section>
+            <!--       pagination-->
+            <th:block th:replace="~{modules/common/pagination :: category}"></th:block>
+            <!--Footer-->
+            <th:block th:replace="~{modules/common/footer :: footer}"></th:block>
+        </main>
+
+    </div>
+    <!--    Tail JS-->
+    <th:block th:replace="~{modules/tail :: tail}"></th:block>
+</th:block>
+</html>

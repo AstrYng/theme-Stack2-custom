@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<th:block th:fragment="comment">
+    <th:block th:fragment="waline(name, kind, group)">
+        <div class="article-comment">
+            <div id="waline"></div>
+
+
+        </div>
+        <style>
+            .article-comment {
+                background-color: var(--card-background);
+                border-radius: var(--card-border-radius);
+                box-shadow: var(--shadow-l1);
+                padding: var(--card-padding);
+                --waline-font-size: var(--article-font-size);
+            }
+
+            .article-comment .wl-count {
+                color: var(--card-text-color-main);
+            }
+        </style>
+        <script th:src="@{/assets/lib/waline/waline.js}"></script>
+        <link rel="stylesheet"
+              th:href="@{/assets/lib/waline/waline.css}"
+        />
+
+        <!-- 脚本文件 -->
+        <script type="module" th:inline="javascript" th:if="${theme.config.base.waline.waline_setting == 'default'}">
+            Waline.init({
+                "copyright": false,
+                "dark": "html[data-scheme=\"dark\"]",
+                "el": "#waline",
+                "emoji": ["[(${#theme.assets(\"/lib/waline/Sticker-100/\")})]"],
+                "lang": "zh-CN",
+                "locale": {
+                    "admin": "👻屑博主",
+                    "placeholder": "🎉留下你的脚印."
+                },
+                "pageview": true,
+                "reaction": false,
+                "requiredMeta": ["name", "email"],
+                "search": false,
+                "serverURL": /*[[${theme.config.base.waline.waline_url}]]*/""
+            });
+        </script>
+        <script th:if="${theme.config.base.waline.waline_setting == 'custom'}"
+                th:utext="${theme.config.base.waline.waline_custom}"></script>
+    </th:block>
+    <th:block th:fragment="default(name,kind, group)">
+        <div class="article-comment">
+            <div class="comment-head">
+                <div class="comment-title">
+                    <span > [[#{theme.comment}]]</span>
+                </div>
+            </div>
+            <halo:comment
+                    th:attr="name=${name},kind=${kind},group=${group}"
+            />
+
+        </div>
+    </th:block>
+
+</th:block>
+</html>

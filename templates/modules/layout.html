@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html  th:fragment="html (content, title, pageType)" xmlns:th="https://www.thymeleaf.org" lang="en">
+<th:block th:replace="~{modules/head :: head(${title})}"></th:block>
+  <body th:class="${pageType != 'index' ? 'article-page' : ''}">
+  <script>
+    (function() {
+      const colorSchemeKey = 'StackColorScheme';
+      if (!localStorage.getItem(colorSchemeKey)) {
+        localStorage.setItem(colorSchemeKey, "auto");
+      }
+    })();
+  </script>
+  <script>
+    (function() {
+      const colorSchemeKey = 'StackColorScheme';
+      const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+      const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+      if (colorSchemeItem === 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+
+
+        document.documentElement.dataset.scheme = 'dark';
+      } else {
+        document.documentElement.dataset.scheme = 'light';
+      }
+    })();
+  </script>
+    <th:block th:replace="${content}" />
+  </body>
+</html>
