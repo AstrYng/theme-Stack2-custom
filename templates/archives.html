@@ -37,7 +37,7 @@
                             <div class="article-details">
                                 <h2 class="article-title" th:text="${post.spec.title}"></h2>
                                 <footer class="article-time">
-                                    <time th:datetime="${post.spec.publishTime}" th:text="${#dates.format(post.spec.publishTime, 'MMM dd, yyyy')}"></time>
+                                    <time th:datetime="${post.spec.publishTime}" th:text="${#dates.format(post.spec.publishTime, 'yyyy年MM月dd日')}"></time>
                                 </footer>
                             </div>
                             <div class="article-image" th:if="${! #strings.isEmpty(post.spec.cover)}">
